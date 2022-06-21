@@ -7,7 +7,7 @@ FIR_industrialisation_category = {
 
 		available = {
 			hidden_trigger = {
-				has_start_date < 13.01.01
+				has_start_date < 3830.01.01
 			}
 			NOT = {
 				has_country_flag = fire_industrialisation
@@ -15,7 +15,7 @@ FIR_industrialisation_category = {
 		}
 		visible = {
 			hidden_trigger = {
-				has_start_date < 13.01.01
+				has_start_date < 3830.01.01
 			}
 			NOT = {
 				has_country_flag = fire_industrialisation
@@ -29,10 +29,10 @@ FIR_industrialisation_category = {
 				uses = 10
 				category = society_reforms
 			}
+			add_stability = -0.7
 		}
 
 		modifier = {
-			stability_factor = -0.7
 			monarchism_drift = 0.02
 			pacifism_drift = 0.02
 			tribalism_drift = 0.02
@@ -61,12 +61,12 @@ FIR_industrialisation_category = {
 		icon = military_buildup
 
 		visible = {
-			has_start_date < 14.01.01
+			has_start_date < 3830.01.01
 			has_tech = reform_2
 		}
 		available = {
 			hidden_trigger = {
-				has_start_date < 14.01.01
+				has_start_date < 3830.01.01
 				has_tech = reform_2
 			}
 		}
@@ -125,12 +125,12 @@ FIR_industrialisation_category = {
 		icon = research_boost
 
 		visible = {
-			has_start_date < 60.01.01
+			has_start_date < 3870.01.01
 			has_tech = reform_2
 		}
 		available = {
 			hidden_trigger = {
-				has_start_date < 60.01.01
+				has_start_date < 3870.01.01
 				has_tech = reform_2
 			}
 		}
@@ -220,12 +220,17 @@ FIR_royal_family_category = {
 
 	regret_letting_roku_die = {
 
+		icon = fire_mourn
+
 		visible = {	
 			has_country_leader = {
 				character = FIR_sozin
 				ruling_only = yes
 			}
 			has_idea = legacy_of_roku_and_sozin
+			NOT = {
+				has_country_flag = genocide_active
+			}
 		}
 
 		available = {
@@ -234,6 +239,7 @@ FIR_royal_family_category = {
 				ruling_only = yes
 			}
 			has_idea = legacy_of_roku_and_sozin
+			has_country_flag = fire_no_genocide
 		}
 
 		days_remove = 30
@@ -248,6 +254,7 @@ FIR_royal_family_category = {
 			hidden_effect = {
 				add_command_power = -50
 			}
+			custom_effect_tooltip = regret_letting_roku_die_ttp
 		}
 
 		custom_cost_trigger = {
@@ -265,10 +272,15 @@ FIR_royal_family_category = {
 
 	continue_expansion_plans = {
 
+		icon = fire_expansion
+
 		visible = {	
 			has_country_leader = {
 				character = FIR_sozin
 				ruling_only = yes
+			}
+			NOT = {
+				has_country_flag = fire_no_genocide
 			}
 		}
 
@@ -277,6 +289,7 @@ FIR_royal_family_category = {
 				character = FIR_sozin
 				ruling_only = yes
 			}
+			has_country_flag = genocide_active
 		}
 
 		complete_effect = {
@@ -284,6 +297,13 @@ FIR_royal_family_category = {
 				remove_idea = legacy_of_roku_and_sozin
 				add_idea = ruthless_expansionism
 			}
+			add_trait = {
+				character = FIR_sozin
+				slot = country_leader
+				trait = out_of_controll
+			}
+
+			custom_effect_tooltip = continue_expansion_plans_ttp
 		}
 
 		cost = 50
@@ -302,6 +322,7 @@ FIR_royal_family_category = {
 			has_country_flag = sozin_wife_elua
 			check_variable = { mtth:azulon_age > 3 }
 			check_variable = { mtth:azulon_age < 16 }
+			has_variable = mtth:azulon_age
 		}
 
 		available = {
@@ -342,12 +363,16 @@ FIR_royal_family_category = {
 
 		visible = {	
 			has_character = FIR_azulon
-			#check_variable = { mtth:azulon_age > 17 }
-
+			FIR_azulon = {
+				has_character_flag = FIR_character_born
+				NOT = {
+					has_character_flag = FIR_character_general
+					has_character_flag = FIR_character_death
+				}
+			}
 		}
 
 		available = {
-			has_character = FIR_azulon
 			custom_trigger_tooltip = {
 				tooltip = azulon_age_18_tt
 				check_variable = { mtth:azulon_age > 17 }
@@ -383,27 +408,27 @@ FIR_royal_family_category = {
 		}
 
 	}
-	azulon_not_general = {
-
-		visible = {	
-			is_debug = yes
-		}
-
-		complete_effect = {
-			FIR_azulon = {
-				clr_character_flag = FIR_character_general
-			}
-
-		}
-
-		cost = 0
-		#fire_only_once = yes
-
-		ai_will_do = {
-			factor = 110
-		}
-
-	}
+	#azulon_not_general = {
+#
+	#	visible = {	
+	#		is_debug = yes
+	#	}
+#
+	#	complete_effect = {
+	#		FIR_azulon = {
+	#			clr_character_flag = FIR_character_general
+	#		}
+#
+	#	}
+#
+	#	cost = 0
+	#	#fire_only_once = yes
+#
+	#	ai_will_do = {
+	#		factor = 110
+	#	}
+#
+	#}
 
 	crown_azulon = {
 
@@ -688,8 +713,9 @@ FIR_dragon_category = {
 		}
 
 		cost = 100
-        fire_only_once = yes
-        ai_will_do = {
+
+		fire_only_once = yes
+		ai_will_do = {
 			factor = 10
 		}
 	}
@@ -702,12 +728,14 @@ FIR_conquest_category = {
 
 		icon = military_buildup
 
-		visible = {	
+		visible = {
+			has_start_date < 3830.01.01
 			OR = {
 				NOT = {
 					has_idea = legacy_of_roku_and_sozin 
 				}
 				has_war_with = EAR
+				has_country_flag = emergency_intervention_atrocity
 			}
 		}
 
@@ -717,12 +745,13 @@ FIR_conquest_category = {
 					has_idea = legacy_of_roku_and_sozin 
 				}
 				has_war_with = EAR
+				has_country_flag = emergency_intervention_atrocity
 			}
 		}
 
 		modifier = {
 			consumer_goods_factor = 0.2
-			production_speed_smithy_factor = 0.25
+			production_speed_arms_factory_factor = 0.25
 		}
 
 		remove_effect = {
@@ -736,19 +765,19 @@ FIR_conquest_category = {
 			set_country_flag = military_preparations_complete
 		}
 
-		days_remove = 120
+		days_remove = 90
 
 		custom_cost_trigger = {
 			num_of_civilian_factories > 1
 		}
 		custom_cost_text = expenses_20
 
-        fire_only_once = yes
-        ai_will_do = {
-			factor = 1000
+		fire_only_once = yes
+		ai_will_do = {
+			base = 1000
 			modifier = {
 				has_war = yes
-				factor = 0
+				factor = 10
 			}
 		}
 	}
@@ -757,7 +786,8 @@ FIR_conquest_category = {
 
 		icon = attack_plan
 
-		visible = {	
+		visible = {
+			has_start_date < 3830.01.01
 			OR = {
 				AND = {
 					NOT = { 
@@ -769,14 +799,16 @@ FIR_conquest_category = {
 				}
 				has_war_with = EAR 
 			}
+			NOT = { 
+				has_country_flag = FIR_attack_plan_made
+			}
 		}
 
 		available = {
-            AND = {
-				country_exists = EAR		
+			AND = {
 				NOT = { 
 					AND = {
-						has_war_with = EAR 
+						#has_war_with = EAR 
 						has_country_flag = FIR_attack_plan_made
 						has_country_flag = earth_diplomacy_path
 					}
@@ -787,7 +819,7 @@ FIR_conquest_category = {
 				}
 				has_country_flag = military_preparations_complete
 			}
-        }
+		}
 
         modifier = {
 			command_power_gain = -0.5
@@ -810,19 +842,19 @@ FIR_conquest_category = {
 			}
 		}
 
-		days_remove = 90
+		days_remove = 30
 
 		custom_cost_trigger = {
 			num_of_civilian_factories > 4
 		}
 		custom_cost_text = manufactory_5
 
-        fire_only_once = yes
-        ai_will_do = {
-			factor = 0
+		fire_only_once = yes
+		ai_will_do = {
+			base = 0
 			modifier = {
 				has_war = yes
-				factor = 0
+				add = 50
 			}
 		}
 	}
@@ -831,7 +863,8 @@ FIR_conquest_category = {
 
 		icon = attack_plan
 
-		visible = {	
+		visible = {
+			has_start_date < 3830.01.01
 			OR = {
 				AND = {
 					NOT = { 
@@ -843,14 +876,16 @@ FIR_conquest_category = {
 				}
 				has_war_with = EAR 
 			}
+			NOT = { 
+				has_country_flag = FIR_attack_plan_made
+			}
 		}
 
 		available = {
-            AND = {
-				country_exists = EAR		
+			AND = {
 				NOT = { 
 					AND = {
-						has_war_with = EAR 
+						#has_war_with = EAR 
 						has_country_flag = FIR_attack_plan_made
 						has_country_flag = earth_diplomacy_path
 					}
@@ -861,7 +896,7 @@ FIR_conquest_category = {
 				}
 				has_country_flag = military_preparations_complete
 			}
-        }
+		}
 
         modifier = {
 			command_power_gain = -0.5
@@ -884,19 +919,19 @@ FIR_conquest_category = {
 			}
 		}
 
-		days_remove = 90
+		days_remove = 30
 
 		custom_cost_trigger = {
 			num_of_civilian_factories > 4
 		}
 		custom_cost_text = manufactory_5
 
-        fire_only_once = yes
-        ai_will_do = {
-			factor = 100
+		fire_only_once = yes
+ 		ai_will_do = {
+			base = 100
 			modifier = {
 				has_war = yes
-				factor = 0
+				factor = 100
 			}
 		}
 	}
@@ -906,6 +941,7 @@ FIR_conquest_category = {
 		icon = attack_plan
 
 		visible = {
+			has_start_date < 3830.01.01
 			OR = {
 				AND = {
 					NOT = { 
@@ -917,14 +953,16 @@ FIR_conquest_category = {
 				}
 				has_war_with = EAR 
 			}
+			NOT = { 
+				has_country_flag = FIR_attack_plan_made
+			}
 		}
 
 		available = {
-            AND = {
-				country_exists = EAR		
+			AND = {	
 				NOT = { 
 					AND = {
-						has_war_with = EAR 
+						#has_war_with = EAR 
 						has_country_flag = FIR_attack_plan_made
 						has_country_flag = earth_diplomacy_path
 					}
@@ -935,7 +973,7 @@ FIR_conquest_category = {
 				}
 				has_country_flag = military_preparations_complete
 			}
-        }
+		}
 
         modifier = {
 			command_power_gain = -0.5
@@ -958,19 +996,19 @@ FIR_conquest_category = {
 			}
 		}
 
-		days_remove = 90
+		days_remove = 30
 
 		custom_cost_trigger = {
 			num_of_civilian_factories > 4
 		}
 		custom_cost_text = manufactory_5
 
-        fire_only_once = yes
-        ai_will_do = {
-			factor = 0
+		fire_only_once = yes
+		ai_will_do = {
+			base = 0
 			modifier = {
 				has_war = yes
-				factor = 0
+				add = 50
 			}
 		}
 	}
@@ -980,31 +1018,42 @@ FIR_conquest_category = {
 		icon = war
 
 		visible = {
+			country_exists = EAR
 			NOT = { 
 				has_war_with = EAR 
-				has_country_flag = earth_diplomacy_path
 			}
-			has_country_flag = FIR_attack_plan_made
+			OR = {
+				AND = {
+					NOT = { 
+						has_war_with = EAR 
+						has_country_flag = earth_diplomacy_path
+					}
+					has_country_flag = FIR_attack_plan_made
+				}
+				has_country_flag = earth_war_path
+				has_country_flag = emergency_intervention_atrocity
+			}
       }
 
 		available = {
-			AND = {
-				country_exists = EAR
-				has_country_flag = FIR_attack_plan_made	
-				threat > 0.5	
-				NOT = { 
-					has_war_with = EAR 
-					has_decision = military_preparations
-					OR = {
-						has_decision = central_attack_plan
-						has_decision = southern_attack_plan
-						has_decision = northern_attack_plan
+			OR = {
+				AND = {
+					has_country_flag = FIR_attack_plan_made	
+					threat > 0.5	
+					NOT = { 
+						#has_decision = military_preparations
+						#OR = {
+						#	has_decision = central_attack_plan
+						#	has_decision = southern_attack_plan
+						#	has_decision = northern_attack_plan
+						#}
+						has_country_flag = approach_earthkingdom
+						has_country_flag = earth_diplomacy_path
 					}
-					has_country_flag = approach_earthkingdom
-					has_country_flag = earth_diplomacy_path
 				}
+				has_country_flag = emergency_intervention_atrocity
 			}
-       }
+		}
 
 		war_with_on_remove = EAR
 
@@ -1012,6 +1061,15 @@ FIR_conquest_category = {
 			declare_war_on = {
 				target = EAR
 				type = annex_everything
+			}
+			every_country = {
+				limit = {
+					is_in_faction_with = EAR
+				}
+				add_to_war = {
+					targeted_alliance = EAR
+					enemy = FIR
+				}
 			}
 			if = {
 				limit = {
@@ -1046,10 +1104,14 @@ FIR_conquest_category = {
 		fire_only_once = yes
 
 		ai_will_do = {
-			factor = 100
+			base = 100
 			modifier = {
 				has_war = yes
-				factor = 0
+				add = -99
+			}
+			modifier = {
+				has_country_flag = emergency_intervention_atrocity
+				factor = 100
 			}
 		}
 	}
@@ -1304,7 +1366,7 @@ FIR_civil_decision_category = {
 			has_war = yes
 			has_idea = national_prosperity
 			hidden_trigger = {
-				has_start_date < 13.01.01
+				has_start_date < 3830.01.01
 			}
 		}
 
@@ -1382,6 +1444,174 @@ FIR_civil_decision_category = {
 
 FIR_colonies_category = {
 
+	rescue_fire_citizen_mission = {
+
+		icon = rescue_fire_citizen
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			controls_state = 230
+			controls_state = 280
+		}
+
+
+		days_mission_timeout = 230
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			add_stability = 0.1
+		}
+
+		timeout_effect = {
+			add_stability = -0.5
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	evacuate_fire_citizen_mission = {
+
+		icon = rescue_fire_citizen
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = citizens_evacuated_tt
+				check_variable = { fire_people_in_ek < 0 }
+			}
+		}
+
+
+		days_mission_timeout = 230
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			add_stability = 0.1
+		}
+
+		timeout_effect = {
+			add_stability = -0.5
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		#priority = {
+		#	base = 100
+		#}
+
+	}
+
+	evacuation_convoy = {
+
+		icon = convoy
+
+		visible = {
+			has_active_mission = evacuate_fire_citizen_mission
+		}
+
+		available = {
+			has_active_mission = evacuate_fire_citizen_mission
+		}
+
+		days_remove = 28
+
+		custom_cost_trigger = {
+			has_equipment = { convoy > 19 }
+		}
+		custom_cost_text = convoy_20
+
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = convoy
+				amount = -20
+				producer = ROOT
+			}
+		}
+
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = convoy
+				amount = 20
+				producer = ROOT
+			}
+			add_to_variable = {
+				fire_people_in_ek = -640
+				tooltip = fire_people_in_ek_tooltip
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				add = 100
+				is_historical_focus_on = yes
+			}
+		}
+
+	}
+
+	royal_navy_evacuation_support = {
+
+		icon = fire_navy
+
+		visible = {
+			has_active_mission = evacuate_fire_citizen_mission
+		}
+
+		available = {
+			has_active_mission = evacuate_fire_citizen_mission
+			OR = {
+				ships_in_area = { area = 23 size > 9 }
+				ships_in_area = { area = 26 size > 9 }
+			}
+		}
+
+		custom_cost_trigger = {
+			command_power > 25
+		}
+		custom_cost_text = honour_cost_25
+
+		complete_effect = {
+			add_command_power = -25
+			add_to_variable = {
+				fire_people_in_ek = -1200
+				tooltip = fire_people_in_ek_tooltip
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				add = 100
+				is_historical_focus_on = yes
+			}
+		}
+
+	}
+
 	FIR_approach_earth_kingdom = {
 
 		icon = rewriting
@@ -1392,6 +1622,7 @@ FIR_colonies_category = {
 				FIR = {
 					has_war_with = EAR
 				}
+				has_active_mission = evacuate_fire_citizen_mission
 			}
 			OR = {
 				230 = { has_dynamic_modifier = { modifier = firenation_settlers } }
@@ -1436,6 +1667,10 @@ FIR_colonies_category = {
 			OR = {
 				has_country_flag = earth_war_path
 				has_country_flag = earth_diplomacy_path
+				has_war_with = EAR
+			}
+			NOT = {
+				has_active_mission = evacuate_fire_citizen_mission
 			}
 		}
 		
@@ -1444,6 +1679,7 @@ FIR_colonies_category = {
 				OR = {
 					has_country_flag = earth_war_path
 					has_country_flag = earth_diplomacy_path
+					has_war_with = EAR
 				}
 			}
 		}
@@ -1454,7 +1690,7 @@ FIR_colonies_category = {
 
 		complete_effect = {
 			add_named_threat = { 
-				threat = 20
+				threat = 10
 				name = FIR_sphere_of_influence
 			}
 		}
@@ -1483,6 +1719,7 @@ FIR_colonies_category = {
 
 		visible = {
 			NOT = {
+				has_active_mission = evacuate_fire_citizen_mission
 				has_war_with = WUL
 				country_exists = YFC
 			}
@@ -1562,6 +1799,7 @@ FIR_colonies_category = {
 
 		visible = {
 			NOT = {
+				has_active_mission = evacuate_fire_citizen_mission
 				has_war_with = HAN
 				country_exists = KFC
 			}
@@ -1721,9 +1959,7 @@ FIR_colonies_category = {
 
 		available = {
 			has_government = imperialism
-			owns_state = 155
 			controls_state = 155
-			owns_state = 154
 			controls_state = 154
 			155 = {
 				compliance > 80
@@ -1841,11 +2077,8 @@ FIR_colonies_category = {
 
 		available = {
 			has_government = imperialism
-			owns_state = 230
 			controls_state = 230
-			owns_state = 184
 			controls_state = 184
-			owns_state = 191
 			controls_state = 191
 			230 = {
 				compliance > 80
@@ -1905,11 +2138,8 @@ FIR_colonies_category = {
 
 		available = {
 			has_government = imperialism
-			owns_state = 227
 			controls_state = 227
-			owns_state = 204
 			controls_state = 204
-			owns_state = 214
 			controls_state = 214
 			227 = {
 				compliance > 80
@@ -1969,11 +2199,8 @@ FIR_colonies_category = {
 
 		available = {
 			has_government = imperialism
-			owns_state = 171
 			controls_state = 171
-			owns_state = 165
 			controls_state = 165
-			owns_state = 220
 			controls_state = 220
 			171 = {
 				compliance > 80
@@ -2033,11 +2260,8 @@ FIR_colonies_category = {
 
 		available = {
 			has_government = imperialism
-			owns_state = 280
 			controls_state = 280
-			owns_state = 244
 			controls_state = 244
-			owns_state = 270
 			controls_state = 270
 			280 = {
 				compliance > 80
@@ -2081,8 +2305,8 @@ FIR_colonies_category = {
 
 
 
-#air_genocide_category = {
-#
+air_genocide_category = {
+
 #	arrival_of_the_great_comet = {
 #
 #		icon = mission_comet
@@ -2288,246 +2512,648 @@ FIR_colonies_category = {
 #		}
 #	}
 #
-##	prepare_the_genocide = {
-##
-##		available = {
-##			NOT = {
-##				has_global_flag = sozins_comet_first
-##				has_global_flag = air_nomad_genocide
-##				check_variable = { genocide_preparation > 50 }
-##			}
-##			has_global_flag = genocide_active
-##			has_equipment = {
-##    			firebender_equipment > 99
-##			}
-##        }
-##
-##		visible = {
-##			always = yes
-##		}
-##
-##		days_remove = 7
-##
-##		cost = 0
-##
-##		activation = {
-##
-##		}
-##
-##		is_good = yes
-##
-##		complete_effect = {
-##			add_equipment_to_stockpile = {
-##    			type = firebender_equipment
-##    			amount = -100
-##    			producer = FIR
-##			}
-##			if = {
-##				limit = {
-##					NOT = {
-##						has_variable = genocide_preparation
-##					}
-##					set_variable = {
-##						var = genocide_preparation
-##						value = 10
-##					}
-##				}
-##			}
-##		}
-##
-##		timeout_effect = {
-##			add_to_variable = {
-##				var = genocide_preparation
-##				value = 10
-##			}
-##		}
-##
-##		ai_will_do = {
-##			factor = 100
-##		}
-##
-##	}
-#	
-#	eastern_temple = {
-#
-#		icon = eastern_air_temple
-#
-#		allowed = {
-#			always = no
-#		}
+#	prepare_the_genocide = {
 #
 #		available = {
-#			controls_state = 188
+#			NOT = {
+#				has_global_flag = sozins_comet_first
+#				has_global_flag = air_nomad_genocide
+#				check_variable = { genocide_preparation > 50 }
+#			}
+#			has_global_flag = genocide_active
+#			has_equipment = {
+#    			firebender_equipment > 99
+#			}
 #        }
 #
+#		visible = {
+#			always = yes
+#		}
 #
-#		days_mission_timeout = 90
-#		fire_only_once = yes
+#		days_remove = 7
+#
+#		cost = 0
 #
 #		activation = {
 #
 #		}
 #
-#		is_good = no
+#		is_good = yes
 #
 #		complete_effect = {
-#			FIR = {
-#				country_event = { id = firenation.4 days = 7 }
+#			add_equipment_to_stockpile = {
+#    			type = firebender_equipment
+#    			amount = -100
+#    			producer = FIR
 #			}
-#			set_global_flag = east_temple_fallen
+#			if = {
+#				limit = {
+#					NOT = {
+#						has_variable = genocide_preparation
+#					}
+#					set_variable = {
+#						var = genocide_preparation
+#						value = 10
+#					}
+#				}
+#			}
 #		}
 #
 #		timeout_effect = {
-#			EAT = {
-#				white_peace = FIR
-#				give_military_access = FIR
-#				leave_faction = yes
+#			add_to_variable = {
+#				var = genocide_preparation
+#				value = 10
 #			}
-#			set_global_flag = east_temple_survived
 #		}
 #
-#        ai_will_do = {
+#		ai_will_do = {
 #			factor = 100
 #		}
 #
 #	}
-#
-#	
-#	western_temple = {
-#
-#		icon = western_air_temple
-#
-#		allowed = {
-#			always = no
-#		}
-#
-#		available = {
-#			controls_state = 208
-#        }
-#
-#
-#		days_mission_timeout = 90
-#		fire_only_once = yes
-#
-#		activation = {
-#
-#		}
-#
-#		is_good = no
-#
-#		complete_effect = {
-#			FIR = {
-#				country_event = { id = firenation.1 days = 7 }
-#			}
-#			set_global_flag = west_temple_fallen
-#		}
-#
-#		timeout_effect = {
-#			WAT = {
-#				white_peace = FIR
-#				give_military_access = FIR
-#				leave_faction = yes
-#			}
-#			set_global_flag = west_temple_survived
-#		}
-#
-#        ai_will_do = {
-#			factor = 100
-#		}
-#
-#	}
-#
-#	
-#	northern_temple = {
-#
-#		icon = northern_air_temple
-#
-#		allowed = {
-#			always = no
-#		}
-#
-#		available = {
-#			controls_state = 316
-#        }
-#
-#
-#		days_mission_timeout = 90
-#		fire_only_once = yes
-#
-#		activation = {
-#
-#		}
-#
-#		is_good = no
-#
-#		complete_effect = {
-#			FIR = {
-#				country_event = { id = firenation.3 days = 7 }
-#			}
-#			set_global_flag = north_temple_fallen
-#		}
-#
-#		timeout_effect = {
-#			NAT = {
-#				white_peace = FIR
-#				give_military_access = FIR
-#				leave_faction = yes
-#			}
-#			set_global_flag = north_temple_survived
-#		}
-#
-#        ai_will_do = {
-#			factor = 100
-#		}
-#
-#	}
-#
-#	
-#	southern_temple = {
-#
-#		icon = southern_air_temple
-#
-#		allowed = {
-#			always = no
-#		}
-#
-#		available = {
-#			controls_state = 329
-#        }
-#
-#
-#		days_mission_timeout = 90
-#		fire_only_once = yes
-#
-#		activation = {
-#
-#		}
-#
-#		is_good = no
-#
-#		complete_effect = {
-#			FIR = {
-#				country_event = { id = firenation.2 days = 7 }
-#			}
-#			SAT = {
-#				dismantle_faction = yes
-#			}
-#			set_global_flag = south_temple_fallen
-#		}
-#
-#		timeout_effect = {
-#			SAT = {
-#				white_peace = FIR
-#				give_military_access = FIR
-#				leave_faction = yes
-#			}
-#			set_global_flag = south_temple_survived
-#		}
-#
-#        ai_will_do = {
-#			factor = 100
-#		}
-#
-#	}
-#
-#}
+	
+	gather_firebender_units = {
+
+		icon = fire_helmet
+
+		visible = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_war = yes
+			}
+		}
+
+		available = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_global_flag = air_nomad_genocide
+				has_war = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = not_max_unit_capacity_ttp
+				check_variable = { genocide_preparation < 40 }
+			}
+		}
+
+		days_remove = 7
+
+		custom_cost_trigger = {
+			has_equipment = { firebender_equipment > 79 }
+		}
+		custom_cost_text = firebender_80
+
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = firebender_equipment
+				amount = -80
+				producer = ROOT
+			}
+			add_to_variable = {
+				var = genocide_preparation
+				value = 1
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				add = 100
+				is_historical_focus_on = yes
+			}
+		}
+
+	}
+
+	FIR_send_royal_guards_as_support = {
+
+		icon = fire_royal_guard
+
+		visible = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_war = yes
+			}
+		}
+
+		available = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_global_flag = air_nomad_genocide
+				has_war = yes
+			}
+		}
+
+		days_remove = -1
+
+		cost = 100
+
+		complete_effect = {
+			set_country_flag = duplicate_units
+			custom_effect_tooltip = FIR_duplicate_genocide_units
+		}
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				add = 100
+				is_historical_focus_on = yes
+			}
+		}
+
+	}
+
+	FIR_northern_operation_base = {
+
+		icon = northern_air_temple
+
+		visible = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_war = yes
+			}
+		}
+
+		available = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_global_flag = air_nomad_genocide
+				has_war = yes
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		custom_cost_trigger = {
+			num_of_civilian_factories > 1
+		}
+		custom_cost_text = expenses_10
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = on_invasion_construction_ttp
+			set_country_flag = north_extra_construction
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	FIR_eastern_operation_base = {
+
+		icon = eastern_air_temple
+
+		visible = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_war = yes
+			}
+		}
+
+		available = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_global_flag = air_nomad_genocide
+				has_war = yes
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		custom_cost_trigger = {
+			num_of_civilian_factories > 1
+		}
+		custom_cost_text = expenses_10
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			419 = {
+				add_building_construction = {
+					type = naval_base
+					level = 8
+					instant_build = yes
+					province = 5597
+				}
+			}
+			custom_effect_tooltip = on_invasion_construction_ttp
+			set_country_flag = east_extra_construction
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	FIR_southern_operation_base = {
+
+		icon = southern_air_temple
+
+		visible = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_war = yes
+			}
+		}
+
+		available = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_global_flag = air_nomad_genocide
+				has_war = yes
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		custom_cost_trigger = {
+			num_of_civilian_factories > 1
+		}
+		custom_cost_text = expenses_10
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			404 = {
+				add_building_construction = {
+					type = naval_base
+					level = 8
+					instant_build = yes
+					province = 10569
+				}
+			}
+			custom_effect_tooltip = on_invasion_construction_ttp
+			set_country_flag = south_extra_construction
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	FIR_western_operation_base = {
+
+		icon = western_air_temple
+
+		visible = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_war = yes
+			}
+		}
+
+		available = {
+			has_country_flag = genocide_active
+			NOT = {
+				has_global_flag = sozins_comet_first
+				has_global_flag = air_nomad_genocide
+				has_war = yes
+			}
+		}
+
+		days_remove = 30
+
+		fire_only_once = yes
+
+		custom_cost_trigger = {
+			num_of_civilian_factories > 1
+		}
+		custom_cost_text = expenses_10
+
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+
+		complete_effect = {
+			
+		}
+
+		remove_effect = {
+			264 = {
+				add_building_construction = {
+					type = naval_base
+					level = 8
+					instant_build = yes
+					province = 7281
+				}
+			}
+			custom_effect_tooltip = on_invasion_construction_ttp
+			set_country_flag = west_extra_construction
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+	
+	FIR_eastern_temple_attack = {
+
+		icon = eastern_air_temple
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			GIF = {
+				controls_state = 188
+			}
+		}
+
+
+		days_mission_timeout = 90
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			FIR = {
+				country_event = { id = air_gen.6 days = 7 }
+			}
+			set_global_flag = east_temple_fallen
+		}
+
+		timeout_effect = {
+			if = {
+				limit = {
+					EAT = { is_ai = yes }
+					is_historical_focus_on = yes
+					NOT = {
+						188 = {
+							is_fully_controlled_by = EAT
+						}
+					}
+				}
+				FIR = {
+					country_event = { id = air_gen.6 days = 7 }
+				}
+				EAT = {
+					dismantle_faction = yes
+				}
+				set_global_flag = east_temple_fallen
+			}
+			else = {
+				EAT = {
+					white_peace = GIF
+					#give_military_access = GIF
+					leave_faction = yes
+				}
+				set_global_flag = east_temple_survived
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	
+	FIR_western_temple_attack = {
+
+		icon = western_air_temple
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			GIF = {
+				controls_state = 208
+			}
+		}
+
+
+		days_mission_timeout = 90
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			FIR = {
+				country_event = { id = air_gen.3 days = 7 }
+			}
+			set_global_flag = west_temple_fallen
+		}
+
+		timeout_effect = {
+			if = {
+				limit = {
+					NOT = {
+						208 = {
+							is_fully_controlled_by = WAT
+						}
+					}
+					WAT = { is_ai = yes }
+					is_historical_focus_on = yes
+				}
+				FIR = {
+					country_event = { id = air_gen.3 days = 7 }
+				}
+				WAT = {
+					dismantle_faction = yes
+				}
+				set_global_flag = west_temple_fallen
+			}
+			else = {
+				WAT = {
+					white_peace = WAT
+					#give_military_access = FIR
+					leave_faction = yes
+				}
+				set_global_flag = west_temple_survived
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	
+	FIR_northern_temple_attack = {
+
+		icon = northern_air_temple
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			GIF = {
+				controls_state = 316
+			}
+		}
+
+
+		days_mission_timeout = 90
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			FIR = {
+				country_event = { id = air_gen.5 days = 7 }
+			}
+			set_global_flag = north_temple_fallen
+		}
+
+		timeout_effect = {
+			if = {
+				limit = {
+					NOT = {
+						316 = {
+							is_fully_controlled_by = NAT
+						}
+					}
+					NAT = { is_ai = yes }
+					is_historical_focus_on = yes
+				}
+				FIR = {
+					country_event = { id = air_gen.5 days = 7 }
+				}
+				NAT = {
+					dismantle_faction = yes
+				}
+				set_global_flag = north
+			}
+			else = {
+				NAT = {
+					white_peace = GIF
+					#give_military_access = FIR
+					leave_faction = yes
+				}
+				set_global_flag = north_temple_survived
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+	
+	FIR_southern_temple_attack = {
+
+		icon = southern_air_temple
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			GIF = {
+				controls_state = 329
+			}
+		}
+
+
+		days_mission_timeout = 90
+		fire_only_once = yes
+
+		activation = {
+
+		}
+
+		is_good = no
+
+		complete_effect = {
+			FIR = {
+				country_event = { id = air_gen.4 days = 7 }
+			}
+			SAT = {
+				dismantle_faction = yes
+			}
+			set_global_flag = south_temple_fallen
+		}
+
+		timeout_effect = {
+			if = {
+				limit = {
+					NOT = {
+						329 = {
+							is_fully_controlled_by = SAT
+						}
+					}
+					SAT = { is_ai = yes }
+					is_historical_focus_on = yes
+				}
+				FIR = {
+					country_event = { id = air_gen.4 days = 7 }
+				}
+				SAT = {
+					dismantle_faction = yes
+				}
+				set_global_flag = south_temple_fallen
+			}
+			else = {
+				SAT = {
+					white_peace = GIF
+					#give_military_access = FIR
+					leave_faction = yes
+				}
+				set_global_flag = south_temple_survived
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+
+	}
+
+}
